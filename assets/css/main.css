@@ -1,0 +1,160 @@
+.row{
+    display: flex;
+    flex-direction: row;
+}
+
+/* ----------- NavBar ----------- */
+
+nav{
+    width: 100%;
+    height: 85px;
+    position: fixed;
+    top: 0;
+    left:0;
+    background-color: #1d1a1a;
+    box-shadow: 0 5px 5px #1D272B;
+}
+
+#navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#nav_img{
+    margin-left: 20px;
+}
+
+#nav_title{
+    font-size: 45px;
+    color: aliceblue;
+}
+
+#navbar .row{margin-right: 20px}
+
+.navbtn{
+    border: 2px solid white;
+    border-bottom: 0;
+    border-top: 0;
+    width: 85px; height: 85px;
+    background-size: contain;
+}
+
+.navbtn:hover{
+    background-color: white;
+}
+
+#nav_search{background-image: url(../icon/search.png)}
+#nav_search:hover{background-image: url(../icon/search_b.png)}
+
+#nav_profil{border-left:0;background-image: url(../icon/profil.png)}
+#nav_profil:hover{border-left:0;background-image: url(../icon/profil_b.png)}
+
+.dropdown {
+    display: none;
+    position:absolute;
+    flex-direction: column;
+    top: 85px;
+}
+
+#dropuser {right: 20px}
+
+#dropuser a,
+#dropuser a:hover {
+    height: 40px; width: 150px;
+    border: 2px solid #1d1a1a;
+    border-bottom: 0;
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#dropuser > a:last-child {border-bottom: 2px solid #1d1a1a}
+
+.dropdown a:hover {background-color: #d5d6d6}
+
+#dropsearch {
+    width: 100vw;
+    left: 0;
+    background-color: #1d1a1a;
+    flex-direction: row;
+    padding: 5px;
+}
+
+#dropsearch form input {
+    width: calc(100vw - 250px); height: 30px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    text-align: right;
+    padding-right: 5px; padding-left: 5px;
+    margin-right: 3px;
+}
+
+#dropsearch a,
+#dropsearch form button {
+    border: 1px solid white;
+    background-color: white;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+#dropsearch form button {width:100px; height: 34px}
+
+#dropsearch div{
+    right: 20px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+#dropsearch a,
+#dropsearch a:hover {
+    color: black;
+    text-decoration: none;
+    border-radius: 10px;
+    position: absolute;
+    padding-left: 10px; padding-right: 10px;
+    height: 20px;
+}
+
+#dropsearch a:hover{background-color: #d5d6d6}
+
+.navbtn:hover .dropdown {
+    display: flex;
+    background-color: white;
+}
+
+/* ----------- Section ----------- */
+
+body {background-color: darkgray}
+
+section {
+    width: 100%;
+    padding-top: 85px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+section > div,
+section > aside {min-height: calc(100vh - 122px)}
+
+section > div{
+    width: 800px;
+    background-color: white;
+    margin: 10px;
+    background-image: url(../img/openfoodfact_head.png);
+    background-position: bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+section > aside{
+    width: 200px;
+    background-color: white;
+    margin: 10px;
+}

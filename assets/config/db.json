@@ -1,0 +1,8 @@
+{
+  "jdbc": "pgsql",
+  "host": "127.0.0.1",
+  "dbname": "dbtest",
+  "user": "postgres",
+  "pass": "root",
+  "default_schema": "openFoodFact"
+}
