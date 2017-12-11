@@ -6,11 +6,19 @@
  * Time: 22:49
  */
 
-class index{
+class Main{
     public $bdd;
+    private static $index = null;
 
+    private function __construct(){
+        include "../model/Connect.php";
 
-    public function __construct(){
+        $this->bdd = Connect::getInstance();
+    }
 
+    public static function getInstance(){
+        if(is_null(self::$index))
+            self::$index = new Main();
+        return self::$index;
     }
 }

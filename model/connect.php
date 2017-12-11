@@ -9,7 +9,7 @@
 class Connect{
     private $jdbc, $user, $pass, $host, $dbname, $defaultSchema;
     public $bdd;
-    private $filename = "G:\DUT2A\Prolog\Projet Open Food Facts\Project\assets\config\db.json";
+    private $filename = "G:\DUT2A\Prolog\Projet Open Food Facts\Project\config\db.json";
     private static $connect = null;
 
     private function __construct(){
