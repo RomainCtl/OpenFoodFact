@@ -9,11 +9,11 @@
 class Base{
     private $jdbc, $user, $pass, $host, $dbname, $defaultSchema;
     public $bdd;
-    private $filename = "G:\DUT2A\Prolog\Projet Open Food Facts\Project\config\db.json";
+    private $filename = "/config/db.json";
     private static $connect = null;
 
-    private function __construct(){
-        $content = file_get_contents($this->filename);
+    private function __construct($webhost){
+        $content = file_get_contents($webhost.$this->filename);
         $dbconf = json_decode($content, true);
 
         $this->user = $dbconf['user'];
@@ -35,9 +35,9 @@ class Base{
         }
     }
 
-    public static function getInstance(){
+    public static function getInstance($webhost){
         if(is_null(self::$connect))
-            self::$connect = new Base();
+            self::$connect = new Base($webhost);
         return self::$connect;
     }
 

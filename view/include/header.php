@@ -8,30 +8,31 @@
 ?>
 <header>
     <nav id="navbar">
-        <a href="index.php">
-            <img id="nav_img" src="openFoodFactLogo_w.png" height=80 alt="Open Food Fact Logo"/>
+        <a href="<?php echo $_GET['host'] ?>">
+            <img id="nav_img" src="assets/img/openFoodFactLogo_w.png" height=80 alt="Open Food Fact Logo"/>
         </a>
         <h1 id="nav_title">Open Food Fact</h1>
         <div class="row">
             <div class="navbtn" id="nav_search">
                 <div class="dropdown" id="dropsearch">
-                    <form role="search" method="post" action="search.php">
+                    <form role="search" method="post" action="<?php echo $_GET['host']."/index.php?action=search" ?>">
                         <input type="text" placeholder="Chercher" name="research" required>
                         <button type="submit">Chercher</button>
                     </form>
                     <div>
-                        <a href="">+ Filtres</a>
+                        <a href="<?php $_GET['host']."/index.php?action=advsearch" ?>">+ Filtres</a>
                     </div>
                 </div>
             </div>
             <div class="navbtn" id="nav_profil">
                 <div class="dropdown" id="dropuser">
-                    <a href="">Ajouter un produit</a>
-                    <a href="">Mes produit</a>
-                    <a href="">Mon Compte</a>
-                    <a href="">Déconnexion</a>
+                    <a href="<?php echo $_GET['host']."/index.php?action=add" ?>">Ajouter un produit</a>
+                    <a href="<?php echo $_GET['host']."/index.php?action=myproducts" ?>">Mes produit</a>
+                    <a href="<?php echo $_GET['host']."/index.php?action=account" ?>">Mon Compte</a>
+                    <a href="<?php echo $_GET['host']."/index.php?action=logout" ?>">Déconnexion</a>
                 </div>
             </div>
         </div>
     </nav>
 </header>
+<section>

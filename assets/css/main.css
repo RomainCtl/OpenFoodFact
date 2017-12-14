@@ -169,8 +169,13 @@ section > aside{
     margin: 10px;
 }
 
+#contains{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
 .product, #reload {
-    display: inline-block;
     box-shadow: 5px 5px 5px rgb(185, 185, 185);
     text-align: center;
     padding: 5px;
