@@ -6,7 +6,7 @@
  * Time: 20:22
  */
 
-class Connect{
+class Base{
     private $jdbc, $user, $pass, $host, $dbname, $defaultSchema;
     public $bdd;
     private $filename = "G:\DUT2A\Prolog\Projet Open Food Facts\Project\config\db.json";
@@ -37,7 +37,35 @@ class Connect{
 
     public static function getInstance(){
         if(is_null(self::$connect))
-            self::$connect = new Connect();
+            self::$connect = new Base();
         return self::$connect;
+    }
+
+    public function queryArray($sql){
+        $res = $this->bdd->query($sql);
+
+        $result = array();
+
+        if ($res)
+            while ($row = $res->fetch(PDO::FETCH_ASSOC))
+                array_push($result, $row);
+        return $result;
+    }
+
+    public function queryArrayNoDouble($sql, $pk){
+        $res = $this->bdd->query($sql);
+
+        $result = array();
+
+        if ($res)
+            while ($row = $res->fetch(PDO::FETCH_ASSOC))
+                if (!self::alreadyPush($result, $row, $pk))
+                    array_push($result, $row);
+        return $result;
+    }
+
+    private function alreadyPush($result, $row, $pk){
+        foreach ($result as $k => $v) if ($v[$pk] == $row[$pk]) return true;
+        return false;
     }
 }

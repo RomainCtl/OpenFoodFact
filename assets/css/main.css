@@ -1,9 +1,14 @@
+@font-face {
+    font-family: Exo;
+    src: url(../font/Exo-SemiBold.otf);
+}
+
+* {font-family: Exo;}
+
 .row{
     display: flex;
     flex-direction: row;
 }
-
-/* ----------- NavBar ----------- */
 
 nav{
     width: 100%;
@@ -128,9 +133,11 @@ nav{
     background-color: white;
 }
 
-/* ----------- Section ----------- */
-
-body {background-color: darkgray}
+body {/*background-color: darkgray*/
+    background-image:url(../img/greybakcground.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
 section {
     width: 100%;
@@ -141,7 +148,10 @@ section {
 }
 
 section > div,
-section > aside {min-height: calc(100vh - 122px)}
+section > aside {
+    height: calc(100vh - 122px);
+    overflow-y: scroll;
+}
 
 section > div{
     width: 800px;
@@ -157,4 +167,103 @@ section > aside{
     width: 200px;
     background-color: white;
     margin: 10px;
+}
+
+.product, #reload {
+    display: inline-block;
+    box-shadow: 5px 5px 5px rgb(185, 185, 185);
+    text-align: center;
+    padding: 5px;
+    margin: 10px;
+}
+
+.product{
+    width: 120px;
+    height: 150px;
+    background-color: rgba(211, 211, 211, 0.88);
+}
+
+.product:hover{background-color: rgba(226, 226, 226, 0.88)}
+#reload:hover{background-color: rgba(240, 240, 240, 0.88)}
+
+#reload{
+    width: 740px; height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(224, 224, 224, 0.88);
+}
+#reload > img {max-height: 40px}
+
+.product > img{max-height: 100px}
+
+#contains > h1 {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    font-size: 36px
+}
+
+#contains a,
+#contains a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+#advResearch {
+    padding: 20px;
+    padding-top: 0
+}
+
+#advSearch {
+    width: 80%;
+    height: 35px;
+    padding: 5px;
+    background-color: #efefef;
+}
+
+.inlineSelect {
+    margin-right: 8px;
+    height: 25px;
+}
+
+#advResearch h4 {margin-top:0}
+
+#advResearch h2 + .row > div:first-child {margin-right: 100px}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #d9d9d9;
+    margin: 1em 0;
+    padding: 0;
+}
+
+#advsearchbtn{
+    height: 35px; width: 130px;
+    margin-top: 40px;
+    margin-left: 600px;
+}
+
+#advsearchbtn,
+.adder {
+    background-color: #ddd;
+    box-shadow: 5px 5px 5px #b5b5b5;
+    border:0;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer
+}
+
+#advsearchbtn:hover,
+.adder:hover {background-color: #f0f0f0}
+
+.options {font-size: 14px; color: #3c3c3c}
+
+#nutlist div,
+#critlist div {margin-bottom: 5px}
+
+.adder{
+    color: #434343;
+    padding: 5px;
 }

@@ -6,19 +6,18 @@
  * Time: 22:49
  */
 
-class Main{
-    public $bdd;
-    private static $index = null;
+$_GET['action'];
 
-    private function __construct(){
-        include "../model/Connect.php";
+//if is search
+$_GET['search'];
 
-        $this->bdd = Connect::getInstance();
-    }
+//if is advanced search // c'est en post
+$_GET['adv_search']; //maybe ?
 
-    public static function getInstance(){
-        if(is_null(self::$index))
-            self::$index = new Main();
-        return self::$index;
-    }
-}
+//if it's to consult
+$_GET['consult'];
+
+//if it's to add product //en post aussi
+$_GET['add'];
+
+//etc ..

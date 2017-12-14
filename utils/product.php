@@ -43,14 +43,6 @@ $proteins, $salt, $sodium, $vitamina, $vitaminc, $calcium, $iron, $nutrition_sco
     }
 
     public static function withCode($bdd, $code){
-        $res = $bdd->query("Select * from produits where code='".$code."'");
-
-        $result = array();
-
-        if ($res)
-            while ($row = $res->fetch(PDO::FETCH_ASSOC))
-                array_push($result, $row);
-
-        return new self($result);
+        return new self($bdd->queryArray("Select * from produits where code='".$code."'"));
     }
 }

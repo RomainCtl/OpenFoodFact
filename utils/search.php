@@ -40,16 +40,6 @@
 
          $sql .= "limit 100;";
 
-         $res = $this->bdd->query($sql);
-
-         if ($res)
-             while ($row = $res->fetch(PDO::FETCH_ASSOC))
-                 if (!self::alreadyPush($this->result[$k], $row))
-                     array_push($this->result[$k], $row);
-     }
-
-     private function alreadyPush($result, $row){
-         foreach ($result as $k => $v) if ($v['code'] == $row['code']) return true;
-         return false;
+         $this->result[$k] = $this->bdd->queryArrayNoDouble($sql, 'code');
      }
 }

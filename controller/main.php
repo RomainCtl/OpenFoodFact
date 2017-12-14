@@ -6,18 +6,23 @@
  * Time: 00:09
  */
 
-$_GET['action'];
+class Main{
+    public $bdd;
+    private static $index = null;
 
-//if is search
-$_GET['search'];
+    private function __construct(){
+        include "../model/Connect.php";
 
-//if is advanced search // c'est en post
-$_GET['adv_search']; //maybe ?
+        $this->bdd = Base::getInstance();
+    }
 
-//if it's to consult
-$_GET['consult'];
+    public static function getInstance(){
+        if(is_null(self::$index))
+            self::$index = new Main();
+        return self::$index;
+    }
 
-//if it's to add product //en post aussi
-$_GET['add'];
+    public function index(){ //page accueil, affichage par default
 
-//etc ..
+    }
+}
