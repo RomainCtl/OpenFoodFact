@@ -13,8 +13,10 @@ $main = Main::getInstance();
 if (isset($_GET['action']) && !empty($_GET|'action')){
     switch ($_GET['action']){
         case "search":
+            $main->search($_POST['research']);
             break;
         case "consult":
+            $main->consult($_GET['num']);
             break;
         case "advsearch"://peut etre afficher le formulaire ou bien le resultat de la recherche
             break;

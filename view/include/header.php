@@ -16,7 +16,7 @@
             <div class="navbtn" id="nav_search">
                 <div class="dropdown" id="dropsearch">
                     <form role="search" method="post" action="<?php echo $_GET['host']."/index.php?action=search" ?>">
-                        <input type="text" placeholder="Chercher" name="research" required>
+                        <input type="text" placeholder="Chercher" id="research" name="research" required>
                         <button type="submit">Chercher</button>
                     </form>
                     <div>
