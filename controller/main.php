@@ -12,6 +12,7 @@ class Main{
     public $webHost;
     public $defaultIMG;
     public $defaultLimit;
+    public $prodconf;
 
     private function __construct(){
         $this->webHost = "http://".$_SERVER['HTTP_HOST']."/OpenFoodFact/Site";
@@ -21,6 +22,9 @@ class Main{
         include "./model/Connect.php";
 
         $this->bdd = Base::getInstance($this->webHost);
+
+        $content = file_get_contents($this->webHost."/config/norme.json");
+        $this->prodconf = json_decode($content, true);
     }
 
     public static function getInstance(){
@@ -30,9 +34,6 @@ class Main{
     }
 
     public function index(){ //page accueil, affichage par default
-        $this->headView();
-        $_GET['host'] = $this->webHost;
-
         $res = $this->bdd->queryArray("Select code, name, image_url from produits Order By last_change_date Limit "
             .$this->defaultLimit);
 
@@ -42,29 +43,30 @@ class Main{
             $_POST['figures'][$row['code']]['legend'] = substr($row['name'], 0, 20);
         }
 
-        include "./view/figure.php";
-        $this->footView();
+        $this->viewWithInclude("./view/figure.php");
     }
 
     public function consult($code){
-        $this->headView();
-        $_GET['host'] = $this->webHost;
+        include "./utils/product.php";
+        $produit = Produit::withCode($this->bdd, $code);
 
-        $res = $this->bdd->queryArray("Select * from produits Where code='".$code."';");
+        $_POST['defaultIMG'] = $this->defaultIMG;
+        $_POST['prodconf'] = $this->prodconf;
+        $_POST['product'] = $produit->getProduct();
+        $_POST['nutrition'] = $produit->getNutrition();
+        $_POST['additifs'] = $produit->getAdditifs();
+        $_POST['countries'] = $produit->getCountries();
 
-        include "./view/product.php";
-        $this->footView();
+        $this->viewWithInclude("./view/product.php");
     }
 
     public function search($string){
-        $this->headView();
-        $_GET['host'] = $this->webHost;
-
         include "./utils/search.php";
-        $search = new Search($this->bdd);
+        $search = new Search($this->bdd, $this->defaultIMG);
         $res = $search->search(strtolower($string));
+        $_POST['search'] = $string;
 
-        if (empty($res)) include "./view/include/noresult.php";
+        if (empty($res)) $this->viewWithInclude("./view/include/noresult.php");
         else {
             foreach ($res as $row) {
                 foreach($row as $r) {
@@ -74,19 +76,17 @@ class Main{
                     $_POST['figures'][$r['code']]['legend'] = substr($r['name'], 0, 20);
                 }
             }
-
-            include "./view/figure.php";
+            $this->viewWithInclude("./view/figure.php");
         }
-        $this->footView();
     }
 
-    private function headView(){
+    private function viewWithInclude($path){
         $_GET['host'] = $this->webHost;
         include "view/include/head.html";
         include "view/include/header.php";
-    }
 
-    private function footView(){
+        include $path;
+
         include "./view/widget.php";
         include "./view/include/foot.html";
     }

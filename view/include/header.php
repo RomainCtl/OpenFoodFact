@@ -11,7 +11,7 @@
         <a href="<?php echo $_GET['host'] ?>">
             <img id="nav_img" src="assets/img/openFoodFactLogo_w.png" height=80 alt="Open Food Fact Logo"/>
         </a>
-        <h1 id="nav_title">Open Food Fact</h1>
+        <h1 id="nav_title">Open Food Facts</h1>
         <div class="row">
             <div class="navbtn" id="nav_search">
                 <div class="dropdown" id="dropsearch">
@@ -20,7 +20,7 @@
                         <button type="submit">Chercher</button>
                     </form>
                     <div>
-                        <a href="<?php $_GET['host']."/index.php?action=advsearch" ?>">+ Filtres</a>
+                        <a href="<?php echo $_GET['host']."/index.php?action=advsearch" ?>">+ Filtres</a>
                     </div>
                 </div>
             </div>

@@ -7,12 +7,13 @@
  */
  class Search{
 
-     private $attr, $result, $bdd;
+     private $attr, $result, $bdd, $defaultIMG;
 
-     public function __construct($bdd){
+     public function __construct($bdd, $img){
          $this->attr = array("name", "code", "creator", "ingredients", "brands");
          $this->result = array();
          $this->bdd = $bdd;
+         $this->defaultIMG = $img;
      }
 
      public function search($string){
@@ -26,19 +27,17 @@
 
          $tab = explode(" ", $string);
 
-         foreach ($this->attr as $v){
-             $this->get($tab, $v);
-         }
+         foreach ($this->attr as $v) $this->get($tab, $v);
 
-         foreach ($this->result as $row) {
-             foreach($row as $r) {
-                 $_POST['figures'][$r['code']]['src'] = (!isset($r['image_url']) && empty($r['image_url']) ?
-                     $this->defaultIMG : $r['image_url']);
-                 $_POST['figures'][$r['code']]['alt'] = "Image " . substr($r['name'], 0, 14);
-                 $_POST['figures'][$r['code']]['legend'] = substr($r['name'], 0, 20);
-             }
-         }
-         return $this->result;
+         $k=true;
+
+         foreach($this->result as $a)
+             if (!empty($a)) $k=false;
+
+         if ($k)
+             return array();
+         else
+             return $this->result;
      }
 
      private function get($tab, $v){

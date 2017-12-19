@@ -10,6 +10,11 @@
     flex-direction: row;
 }
 
+.col{
+    display: flex;
+    flex-direction: column;
+}
+
 nav{
     width: 100%;
     height: 85px;
@@ -157,10 +162,6 @@ section > div{
     width: 800px;
     background-color: white;
     margin: 10px;
-    background-image: url(../img/openfoodfact_head.png);
-    background-position: bottom;
-    background-size: contain;
-    background-repeat: no-repeat;
 }
 
 section > aside{
@@ -170,35 +171,34 @@ section > aside{
 }
 
 #contains{
+    background-image: url(../img/openfoodfact_head.png);
+    background-position: bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
 }
 
-.product, #reload {
-    box-shadow: 5px 5px 5px rgb(185, 185, 185);
-    text-align: center;
-    padding: 5px;
-    margin: 10px;
+#consult > div,
+#consult > table,
+#consult > h2,
+#consult > h3,
+#consult > p {
+    margin: 15px;
 }
 
-.product{
-    width: 120px;
-    height: 150px;
+#consult > div.row {justify-content: space-between}
+
+.product {
+    box-shadow: 5px 5px 5px rgb(185, 185, 185);
+    text-align: center;
+    padding: 5px; margin: 10px;
+    width: 120px; height: 150px;
     background-color: rgba(211, 211, 211, 0.88);
 }
 
 .product:hover{background-color: rgba(226, 226, 226, 0.88)}
-#reload:hover{background-color: rgba(240, 240, 240, 0.88)}
-
-#reload{
-    width: 740px; height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(224, 224, 224, 0.88);
-}
-#reload > img {max-height: 40px}
 
 .product > img{max-height: 100px}
 
@@ -271,4 +271,87 @@ hr {
 .adder{
     color: #434343;
     padding: 5px;
+}
+
+#nutgrade {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#nutgrade > p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px; height: 50px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 20px;
+}
+
+#nutgrade > p:first-child {
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-top-left-radius: 10px;
+    border-top-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-bottom-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+#nutgrade > p:last-child {
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-top-right-radius: 10px;
+    border-top-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#nutgrade > p.active{
+    width: 35px; height: 70px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    font-size: 26px;
+    color: white;
+}
+
+#repnutri {
+    display: flex;
+    flex-direction: column;
+}
+
+#repnutri > div{
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+}
+
+.fort,
+.moyen,
+.faible {
+    width: 25px; height: 25px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.fort {background-color: red}
+.moyen {background-color: orange}
+.faible {background-color: green}
+
+#infnutri {
+    width: 600px;
+    background-color: #b5b5b5;
+}
+
+#infnutri th,
+#infnutri td {
+    padding: 15px;
+    text-align: left;
+    height: 18px;
+    border-bottom: 1px solid #ddd;
+}
+
+#infnutri > tr:last-child td {
+    border-bottom: 0;
 }

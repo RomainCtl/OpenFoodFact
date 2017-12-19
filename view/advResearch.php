@@ -7,25 +7,25 @@
  */
 
 ?>
-<div id="contains">
+<div>
 <h1>Recherche Avancée</h1>
 <form method="post" role="search" action="search.php" id="advResearch">
 
     <input id="advSearch" type="text" placeholder="Mots présents dans le nom du produit, le nom générique, les
-    marques ou ingredients" name="research" required autofocus <?php if (isset($_GET['val']) && !empty
-    ($_GET['val'])) echo "value='".$_GET['val']."'" ?>>
+    marques ou ingredients" name="research" required autofocus <?php if (isset($_POST['val']) && !empty
+    ($_POST['val'])) echo "value='".$_POST['val']."'" ?>>
 
 
     // Les Critères
 
-    <?php if (isset($_GET['criteres']) && !empty($_GET['criteres'])){ ?>
+    <?php if (isset($_POST['criteres']) && !empty($_POST['criteres'])){ ?>
     <h2>Critères</h2>
     <div id="critlist">
         <div id="firstcrit">
             <select class="inlineSelect" name="critere[]">
                 <option value="none" selected>Choisir un critère</option>
                 <?php
-                foreach($_GET['criteres'] as $val => $txt) {
+                foreach($_POST['criteres'] as $val => $txt) {
                     echo "<option value='$val'>$txt</option>";
                 }
                 ?>
@@ -76,14 +76,14 @@
 
     // Les Nutriments
 
-    <?php if (isset($_GET['nutriments']) && !empty($_GET['nutriments'])){ ?>
+    <?php if (isset($_POST['nutriments']) && !empty($_POST['nutriments'])){ ?>
         <h2>Nutriments</h2>
         <div id="nutlist">
             <div id="firstnut">
                 <select class="inlineSelect" name="nutriment[]">
                     <option value="none" selected>Choisir un critère</option>
                     <?php
-                    foreach($_GET['nutriments'] as $val => $txt) {
+                    foreach($_POST['nutriments'] as $val => $txt) {
                         echo "<option value='$val'>$txt</option>";
                     }
                     ?>

@@ -7,42 +7,76 @@
  */
 
 class Produit{
-    public $code, $create_date, $last_change_date, $name, $creator, $brands, $image_url,
-$image_ingredients_url, $ingredients, $servingSize;
-    public $nutritiongrade, $energy, $fat, $satured_fat, $trans_fat, $cholesterol, $carbohydrates, $sugars, $fiber,
-$proteins, $salt, $sodium, $vitamina, $vitaminc, $calcium, $iron, $nutrition_score;
-    public $fromPalmOil;
+    public $product, $nutrition, $additifs, $countries;
+    public $bdd;
 
-    public function __construct(array $info = array()){
-        $this->code = $info['code'];
-        $this->create_date = $info['create_date'];
-        $this->last_change_date = $info['last_change_date'];
-        $this->name = $info['name'];
-        $this->creator = $info['creator'];
-        $this->brands = $info['brands'];
-        $this->image_url = $info['image_url'];
-        $this->image_ingredients_url = $info['image_ingredients_url'];
-        $this->ingredients = $info['ingredients'];
-        $this->nutritiongrade = $info['nutritiongrade'];
-        $this->energy = $info['energy'];
-        $this->fat = $info['fat'];
-        $this->satured_fat = $info['satured_fat'];
-        $this->trans_fat = $info['trans_fat'];
-        $this->cholesterol = $info['cholesterol'];
-        $this->carbohydrates = $info['carbohydrates'];
-        $this->sugars = $info['sugars'];
-        $this->fiber = $info['fiber'];
-        $this->proteins = $info['proteins'];
-        $this->salt = $info['salt'];
-        $this->sodium = $info['sodium'];
-        $this->vitamina = $info['vitamin&'];
-        $this->vitaminc = $info['vitaminc'];
-        $this->calcium = $info['calcium'];
-        $this->iron = $info['iron'];
-        $this->fromPalmOil = $info['fromPalmOil'];
+    public function __construct($bdd, array $info = array()){
+        $this->bdd = $bdd;
+        $this->product = array(
+            "code"=> $info['code'],
+            "create_date" => $info['create_date'],
+            "last_change_date" => $info['last_change_date'],
+            "name" => $info['name'],
+            "creator" => $info['creator'],
+            "brands" => $info['brands'],
+            "image_url" => $info['image_url'],
+            "image_ingredients_url" => $info['image_ingredients_url'],
+            "servingsize" => $info['servingsize'],
+            "ingredients" => $info['ingredients'],
+            "nutritiongrade" => $info['nutritiongrade'],
+            "fromPalmOil" => $info['frompalmoil']
+        );
+        $this->nutrition = array(
+            "Energie" => $info['energy'],
+            "Gras" => $info['fat'],
+            "Gras saturé" => $info['satured_fat'],
+            "Gras trans" => $info['trans_fat'],
+            "Cholesterol" => $info['cholesterol'],
+            "Carbohydrates" => $info['carbohydrates'],
+            "Sucre" => $info['sugars'],
+            "Fibre" => $info['fiber'],
+            "Proteine" => $info['proteins'],
+            "Sel" => $info['salt'],
+            "Sodium" => $info['sodium'],
+            "Vitamin A" => $info['vitamina'],
+            "Vitamin C" => $info['vitaminc'],
+            "Calcium" => $info['calcium'],
+            "Fer" => $info['iron'],
+            "Score nutritionnel" => $info['nutrition_score']
+        );
+        $this->additifs = $this->setAdditifs();
+        $this->countries = $this->setCountries();
+    }
+
+    private function setAdditifs(){
+        $tmp = $this->bdd->queryArray("Select * from additives_produit Where code='".$this->product['code']."';");
+        if (empty($tmp)) return null;
+        else return $tmp;
+    }
+
+    private function setCountries(){
+        $tmp = $this->bdd->queryArray("Select * from origne_produit Where code='".$this->product['code']."';");
+        if (empty($tmp)) return null;
+        else return $tmp;
     }
 
     public static function withCode($bdd, $code){
-        return new self($bdd->queryArray("Select * from produits where code='".$code."'"));
+        return new self($bdd, $bdd->queryArray("Select * from produits where code='".$code."'")[0]);
+    }
+
+    public function getProduct(){
+        return $this->product;
+    }
+
+    public function getNutrition(){
+        return $this->nutrition;
+    }
+
+    public function getAdditifs(){
+        return $this->additifs;
+    }
+
+    public function getCountries(){
+        return $this->countries;
     }
 }
