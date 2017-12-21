@@ -19,6 +19,7 @@ if (isset($_GET['action']) && !empty($_GET|'action')){
             $main->consult($_GET['num']);
             break;
         case "advsearch"://peut etre afficher le formulaire ou bien le resultat de la recherche
+            $main->advsearch();
             break;
         case "add":
             break;

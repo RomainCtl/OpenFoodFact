@@ -1,0 +1,28 @@
+{
+  "criteres" : {
+    "brands" : "Marques",
+    "countries" : "Pays",
+    "additifs" : "Additifs",
+    "ingredients": "Ingrédients",
+    "nutritiongrade" : "Notes nutritionnelle",
+    "creator" : "Contrinuteur"
+  },
+  "nutriments" : {
+    "energy" : "Energie",
+    "fat" : "Gras",
+    "satured_fat" : "Gras saturé",
+    "trans_fat" : "Gras trans",
+    "cholesterol" : "Cholesterol",
+    "carbohydrates" : "Carbohydrates",
+    "sugars" : "Sucre",
+    "fiber" : "Fibre",
+    "proteins" : "Proteine",
+    "salt" : "Sel",
+    "sodium" : "Sodium",
+    "vitamina" : "Vitamin A",
+    "vitaminc" : "Vitamin C",
+    "Calcium" : "calcium",
+    "iron" : "Fer",
+    "nutrition_score" : "Score nutritionnel"
+  }
+}

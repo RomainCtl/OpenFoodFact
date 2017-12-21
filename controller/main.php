@@ -12,7 +12,7 @@ class Main{
     public $webHost;
     public $defaultIMG;
     public $defaultLimit;
-    public $prodconf;
+    public $prodconf, $advsearchconf;
 
     private function __construct(){
         $this->webHost = "http://".$_SERVER['HTTP_HOST']."/OpenFoodFact/Site";
@@ -25,6 +25,9 @@ class Main{
 
         $content = file_get_contents($this->webHost."/config/norme.json");
         $this->prodconf = json_decode($content, true);
+
+        $content = file_get_contents($this->webHost."/config/research.json");
+        $this->advsearchconf = json_decode($content, true);
     }
 
     public static function getInstance(){
@@ -77,6 +80,24 @@ class Main{
                 }
             }
             $this->viewWithInclude("./view/figure.php");
+        }
+    }
+
+    public function advsearch(){
+        if (isset($_POST['research'])){
+            include "./utils/advsearch.php";
+            $advsearch = new Advsearch($this->bdd, $this->defaultIMG, $this->advsearchconf);
+
+            $advsearch->search($_POST);
+
+            echo "<pre>";
+            var_dump($_POST);
+            echo "</pre>";
+        } else {
+            $_POST['criteres'] = $this->advsearchconf['criteres'];
+            $_POST['nutriments'] = $this->advsearchconf['nutriments'];
+
+            $this->viewWithInclude("./view/advResearch.php");
         }
     }
 

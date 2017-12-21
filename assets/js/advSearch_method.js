@@ -1,7 +1,7 @@
 var countCrit=1,
     countNut=1,
-    limitCrit=8,
-    limitNut=8;
+    limitCrit=5,
+    limitNut=16;
 
 function addCrite(){
     if (countCrit < limitCrit) {
@@ -21,5 +21,6 @@ function addElem(model, father, count){
     var elem = document.createElement('div');
     elem.innerHTML = document.getElementById(model).innerHTML;
     document.getElementById(father).appendChild(elem);
-    return count++;
+    count++;
+    return count;
 }
