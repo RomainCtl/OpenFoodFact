@@ -51,7 +51,17 @@ class Advsearch{
 
         $this->sql .= " Order by ".$inf['trie']." Limit ".$inf['nbresult'];
 
-        echo $this->sql;
+        $this->result = $this->bdd->queryArray($this->sql);
+
+        $k=true;
+
+        foreach($this->result as $a)
+            if (!empty($a)) $k=false;
+
+        if ($k)
+            return array();
+        else
+            return $this->result;
     }
 
     private function research($inf){

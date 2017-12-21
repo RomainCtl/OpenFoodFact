@@ -8,6 +8,6 @@
 
 echo "<div id='contains'>";
 
-echo "<h1>Aucune résultat pour la recherche : ".$_POST['search']."</h1>";
+echo "<h1>Aucune résultat pour la recherche  ".$_POST['search']."</h1>";
 
 echo "</div>";

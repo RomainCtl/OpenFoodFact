@@ -88,11 +88,18 @@ class Main{
             include "./utils/advsearch.php";
             $advsearch = new Advsearch($this->bdd, $this->defaultIMG, $this->advsearchconf);
 
-            $advsearch->search($_POST);
+            $res = $advsearch->search($_POST);
 
-            echo "<pre>";
-            var_dump($_POST);
-            echo "</pre>";
+            if (empty($res)) $this->viewWithInclude("./view/include/noresult.php");
+            else {
+                foreach($res as $r) {
+                    $_POST['figures'][$r['code']]['src'] = (!isset($r['image_url']) && empty($r['image_url']) ?
+                        $this->defaultIMG : $r['image_url']);
+                    $_POST['figures'][$r['code']]['alt'] = "Image " . substr($r['name'], 0, 14);
+                    $_POST['figures'][$r['code']]['legend'] = substr($r['name'], 0, 20);
+                }
+                $this->viewWithInclude("./view/figure.php");
+            }
         } else {
             $_POST['criteres'] = $this->advsearchconf['criteres'];
             $_POST['nutriments'] = $this->advsearchconf['nutriments'];
