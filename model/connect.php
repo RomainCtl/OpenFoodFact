@@ -68,4 +68,12 @@ class Base{
         foreach ($result as $k => $v) if ($v[$pk] == $row[$pk]) return true;
         return false;
     }
+
+    public function getAdditives(){
+        return $this->queryArray("SELECT * FROM additives");
+    }
+
+    public function getCountries(){
+        return $this->queryArray("SELECT * FROM countries");
+    }
 }

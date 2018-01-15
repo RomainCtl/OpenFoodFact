@@ -24,7 +24,8 @@ class Produit{
             "servingsize" => $info['servingsize'],
             "ingredients" => $info['ingredients'],
             "nutritiongrade" => $info['nutritiongrade'],
-            "fromPalmOil" => $info['frompalmoil']
+            "fromPalmOil" => $info['frompalmoil'],
+            "nbadditives" => $info['nbadditives']
         );
         $this->nutrition = array(
             "Energie" => $info['energy'],

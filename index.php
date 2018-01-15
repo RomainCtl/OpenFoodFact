@@ -22,8 +22,13 @@ if (isset($_GET['action']) && !empty($_GET|'action')){
             $main->advsearch();
             break;
         case "add":
+            $main->add();
             break;
         case "edit":
+            if (isset($_GET['code']) && !empty($_GET|'code'))
+                $main->edit($_GET['code']);
+            else
+                $main->add();
             break;
         case "myproducts":
             break;

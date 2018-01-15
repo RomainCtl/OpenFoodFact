@@ -109,18 +109,40 @@ class Main{
     }
 
     public function add(){
-        if (isset($_POST['infos'])){
+        if (isset($_POST['codeb'])){
 
         } else {
+            $_POST['criteres'] = $this->advsearchconf['criteres'];
+            $_POST['nutriments'] = $this->advsearchconf['nutriments'];
+            $_POST['additives'] = $this->bdd->getAdditives();
+            $_POST['countries'] = $this->bdd->getCountries();
 
+            $this->viewWithInclude("./view/addProduct.php");
         }
     }
 
-    public function edit(){
-        if (isset($_POST['infos'])){
+    public function edit($code){
+        if (isset($_POST['codeb'])){
 
         } else {
+            $_POST['criteres'] = $this->advsearchconf['criteres'];
+            $_POST['nutriments'] = $this->advsearchconf['nutriments'];
+            $_POST['additives'] = $this->bdd->getAdditives();
+            $_POST['countries'] = $this->bdd->getCountries();
 
+            include "./utils/product.php";
+            $produit = Produit::withCode($this->bdd, $code);
+
+            $_POST['product'] = $produit->getProduct();
+            $_POST['prdNutrition'] = $produit->getNutrition();
+            $_POST['prdAdditifs'] = $produit->getAdditifs();
+            $_POST['prdCountries'] = $produit->getCountries();
+
+            echo "<pre>";
+            var_dump($_POST);
+            echo "</pre>";
+
+            $this->viewWithInclude("./view/addProduct.php");
         }
     }
 

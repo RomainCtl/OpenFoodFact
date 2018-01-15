@@ -214,6 +214,7 @@ section > div > h1 {
     text-decoration: none;
 }
 
+#addProduct,
 #advResearch {
     padding: 20px;
     padding-top: 0
@@ -231,8 +232,15 @@ section > div > h1 {
     height: 25px;
 }
 
+#addProduct h4,
 #advResearch h4 {margin-top:0}
 
+.additifh4 {
+    margin-top: 10px !important;
+    margin-bottom: 5px;
+}
+
+#addProduct h2 + .row > div:first-child
 #advResearch h2 + .row > div:first-child {margin-right: 100px}
 
 hr {
@@ -244,12 +252,14 @@ hr {
     padding: 0;
 }
 
+#addbtn,
 #advsearchbtn{
     height: 35px; width: 130px;
     margin-top: 40px;
     margin-left: 600px;
 }
 
+#addbtn,
 #advsearchbtn,
 .adder {
     background-color: #ddd;
@@ -265,6 +275,7 @@ hr {
 
 .options {font-size: 14px; color: #3c3c3c}
 
+#addilist div,
 #nutlist div,
 #critlist div {margin-bottom: 5px}
 
@@ -400,4 +411,11 @@ aside {
 
 #editbtn:hover{
     background-color: #e2e2e2;
+}
+
+#adderinfos textarea,
+#adderinfos input {
+    margin-top: 5px;
+    margin-bottom: 5px;
+
 }
