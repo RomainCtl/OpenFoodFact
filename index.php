@@ -23,6 +23,8 @@ if (isset($_GET['action']) && !empty($_GET|'action')){
             break;
         case "add":
             break;
+        case "edit":
+            break;
         case "myproducts":
             break;
         case "account": //parametre de compte (optionnel au projet)

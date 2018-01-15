@@ -108,6 +108,22 @@ class Main{
         }
     }
 
+    public function add(){
+        if (isset($_POST['infos'])){
+
+        } else {
+
+        }
+    }
+
+    public function edit(){
+        if (isset($_POST['infos'])){
+
+        } else {
+
+        }
+    }
+
     private function viewWithInclude($path){
         $_GET['host'] = $this->webHost;
         include "view/include/head.html";

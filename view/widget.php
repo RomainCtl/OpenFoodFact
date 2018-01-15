@@ -6,6 +6,9 @@
  * Time: 19:59
  */
 
-echo "<aside>";
-
-echo "</aside>";
+?>
+<aside>
+    <ul id="asidebtn">
+        <a href="<?php echo $_GET['host']."/index.php?action=add" ?>"><li>Ajouter un Produit</li></a>
+    </ul>
+</aside>

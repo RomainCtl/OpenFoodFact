@@ -18,6 +18,9 @@
                 if (empty($_POST['countries'])) echo "inconnu";
                 else foreach($_POST['countries'] as $p) echo $p['alias']." ";
                 ?></p>
+            <a id="editbtn" href="<?php echo $_GET['host']."/index.php?action=edit&code=".$_POST['product']['code'];
+            ?>">Modifier
+                le Produit</a>
         </div>
 
         <img src="<?php echo ($_POST['product']['image_url'] == null ? $_POST['defaultIMG'] : $_POST['product']['image_url']) ?>" alt='Image Produit' width='200'/>
