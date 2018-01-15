@@ -240,7 +240,7 @@ section > div > h1 {
     margin-bottom: 5px;
 }
 
-#addProduct h2 + .row > div:first-child
+#addProduct h2 + .row > div:first-child,
 #advResearch h2 + .row > div:first-child {margin-right: 100px}
 
 hr {
@@ -418,4 +418,8 @@ aside {
     margin-top: 5px;
     margin-bottom: 5px;
 
+}
+
+#nutri input{
+    margin-left: 5px;
 }

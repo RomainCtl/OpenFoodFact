@@ -7,7 +7,7 @@
 ?>
 <div>
 <h1>Ajout d'un produit</h1>
-<form method="post" role="add" action="<?php echo $_GET['host']."/index.php?action=add" ?>" id="addProduct">
+<form method="post" action="<?php echo $_GET['host']."/index.php?action=add" ?>" id="addProduct">
 
     <?php
     $isedit=False;
@@ -143,11 +143,13 @@
     <?php if (isset($_POST['nutriments']) && !empty($_POST['nutriments'])){ ?>
         <h2>Nutriments</h2>
         <div id="nutlist">
-            <div id="nutri">
+            <div class="col" id="nutri">
                 <?php
-                foreach($_POST['prdNutrition'] as $k => $v){
-                    if (in_array($k, $_POST['nutriments']))
-                        echo "$k : <input type='number' value='valnut[".$v."]'/>";
+                if ($isedit) {
+                    foreach ($_POST['prdNutrition'] as $k => $v) {
+                        if (in_array($k, $_POST['nutriments']))
+                            echo "<div class='row'>$k : <input type='number' name='valnut[]' value='$v'/></div>";
+                    }
                 }
                 ?>
             </div>
@@ -156,7 +158,11 @@
                     <option value="none" selected>Choisir un critère</option>
                     <?php
                     foreach($_POST['nutriments'] as $val => $txt) {
-                        echo "<option value='$val'>$txt</option>";
+                        if ($isedit){
+                            if (!in_array($txt, $_POST['nutriments']))
+                                echo "<option value='$val'>$txt</option>";
+                        } else
+                            echo "<option value='$val'>$txt</option>";
                     }
                     ?>
                 </select>

@@ -21,9 +21,13 @@ function addNutr2(){
     if (countNut < limitNut) {
         var t = document.getElementById("nutrimselect");
         var tt = t.options[t.selectedIndex];
-        var k = tt.innerText;
-        document.getElementById("nutri").appendChild(k+" : <input type='number' value='valnut[]'/>");
-        if (countNut == limitNut) document.getElementById("addNut").parentElement.removeChild(document.getElementById("addNut"));
+        if (tt.value != 'none') {
+            var k = tt.innerText;
+            document.getElementById("nutri").innerHTML += "<div class='row'>"+k+"<input type='number'" + " value='valnut[]'/></div>";
+            countNut++;
+            t.removeChild(tt);
+            if (countNut == limitNut) document.getElementById("addNut").parentElement.removeChild(document.getElementById("addNut"));
+        }
     }
 }
 
@@ -51,8 +55,8 @@ function removeCountries(){
     moveto("countrieselected", "countiresselect");
 }
 
-function moveto(list, other){
-    var list = document.getElementById(list);
+function moveto(liste, other){
+    var list = document.getElementById(liste);
     var elem = list.options[list.selectedIndex];
 
     if (elem.value != 'none') {

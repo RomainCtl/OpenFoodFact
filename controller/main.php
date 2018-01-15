@@ -86,7 +86,7 @@ class Main{
     public function advsearch(){
         if (isset($_POST['research'])){
             include "./utils/advsearch.php";
-            $advsearch = new Advsearch($this->bdd, $this->defaultIMG, $this->advsearchconf);
+            $advsearch = new Advsearch($this->bdd, $this->defaultIMG); //, $this->advsearchconf);
 
             $res = $advsearch->search($_POST);
 
@@ -137,10 +137,6 @@ class Main{
             $_POST['prdNutrition'] = $produit->getNutrition();
             $_POST['prdAdditifs'] = $produit->getAdditifs();
             $_POST['prdCountries'] = $produit->getCountries();
-
-            echo "<pre>";
-            var_dump($_POST);
-            echo "</pre>";
 
             $this->viewWithInclude("./view/addProduct.php");
         }
