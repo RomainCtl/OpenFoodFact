@@ -6,27 +6,35 @@
 */
 ?>
 <div>
-<h1>Ajout d'un produit</h1>
-<form method="post" action="<?php echo $_GET['host']."/index.php?action=add" ?>" id="addProduct">
-
     <?php
     $isedit=False;
     if (isset($_POST['product']) && !empty($_POST['product']))
         $isedit=True;
+
+    if ($isedit)
+        echo "<h1 name='codeb' value='".$_POST['product']['code']."'>Modification du Produit : " .$_POST['product']['code']."</h1>";
+    else
+        echo "<h1>Ajout d'un produit</h1>";
     ?>
+<form method="post" action="<?php echo $_GET['host']."/index.php?action=add" ?>" id="addProduct">
 
     <div class="col" id="adderinfos">
-        <input id="codeb" name="codeb" type="number" placeholder="Code barre du produit" required <?php if ($isedit)
-            echo "value='".$_POST['product']['code']."'";
-            ?>/>
+        <?php if (!$isedit){ ?>
+        <input id="codeb" name="codeb" type="number" placeholder="Code barre du produit" required />
+        <?php } ?>
         <input id="name" name="name" type="text" placeholder="Nom du produit" <?php if ($isedit)
+            echo (empty($_POST['product']['name']) ? "" : "value='".$_POST['product']['name']."'") ?>/>
+        <input id="brand" name="brand" type="text" placeholder="Entreprise du produit" <?php if ($isedit) if (!empty
+        ($_POST['product']['brands'])) echo "value='".$_POST['product']['brands']."'"; ?>/>
+        <input id="imageurl" name="imageurl" type="url" placeholder="Url de l'image du produtit" maxlength="120"
+                <?php if ($isedit) echo ($_POST['product']['image_url'] == null ? "" : "value='".$_POST['product']['image_url']."'")
+                ?>/>
+        <input id="imageingrurl" name="imageingrurl" type="url" placeholder="Url de l'image des ingrédients du produtit" maxlength="120"
+            <?php if ($isedit) echo ($_POST['product']['image_ingredients_url'] == null ? "" : "value='".$_POST['product']['image_ingredients_url']."'") ?>/>
+        <input id="servingsize" name="servingsize" type="text" placeholder="Quantité"  <?php if ($isedit)
             echo (empty($_POST['product']['servingsize']) || preg_match('/\s*/', $_POST['product']['servingsize'])
-            == '' ? "indéfini" : "value='".$_POST['product']['servingsize']."'") ?>
-        <input id="brand" name="brand" type="text" placeholder="Entreprise du produit" />
-        <input id="imageurl" name="imageurl" type="url" placeholder="Url de l'image du produtit" maxlength="120"/>
-        <input id="imageingrurl" name="imageingrurl" type="url" placeholder="Url de l'image des ingrédients du produtit" maxlength="120"/>
-        <input id="servingsize" name="servingsize" type="text" placeholder="Quantité" />
-        <textarea rows="4" cols="50" placeholder="Ingrédients" required></textarea>
+            == '' ? "indéfini" : "value='".$_POST['product']['servingsize']."'") ?>/>
+        <textarea rows="4" cols="50" placeholder="Ingrédients" required><?php if ($isedit) echo (empty($_POST['product']['ingredients']) || preg_match('/\s*/',$_POST['product']['ingredients']) == '' ? "" : $_POST['product']['ingredients']) ?></textarea>
     </div>
     <hr/>
 
@@ -145,30 +153,17 @@
         <div id="nutlist">
             <div class="col" id="nutri">
                 <?php
-                if ($isedit) {
-                    foreach ($_POST['prdNutrition'] as $k => $v) {
-                        if (in_array($k, $_POST['nutriments']))
-                            echo "<div class='row'>$k : <input type='number' name='valnut[]' value='$v'/></div>";
-                    }
+                foreach($_POST['nutriments'] as $val => $txt) {
+                    if ($isedit && array_key_exists($txt, $_POST['prdNutrition'])){
+                        echo "<div class='row'>$txt : <input type='number' name='valnut[$txt]'
+ value='".$_POST['prdNutrition'][$txt]."'/></div>";
+                    } else
+                        echo "<div class='row'>$txt : <input type='number' name='valnut[$txt]' /></div>";
                 }
                 ?>
             </div>
-            <div id="firstnut">
-                <select id="nutrimselect" class="inlineSelect" name="nutriment[]">
-                    <option value="none" selected>Choisir un critère</option>
-                    <?php
-                    foreach($_POST['nutriments'] as $val => $txt) {
-                        if ($isedit){
-                            if (!in_array($txt, $_POST['nutriments']))
-                                echo "<option value='$val'>$txt</option>";
-                        } else
-                            echo "<option value='$val'>$txt</option>";
-                    }
-                    ?>
-                </select>
-            </div>
+
         </div>
-        <input id="addNut" class="adder" type="button" value="Ajouter un Nutriment" onclick="addNutr2()"/>
     <?php } ?>
 
     <button id="addbtn" type="submit">Valider</button>

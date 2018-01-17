@@ -18,6 +18,10 @@
                 if (empty($_POST['countries'])) echo "inconnu";
                 else foreach($_POST['countries'] as $p) echo $p['alias']." ";
                 ?></p>
+            <p>Marque : <?php
+                if (!empty($_POST['product']['brands'])) echo $_POST['product']['brands'];
+                else echo "inconnu";
+                ?></p>
             <a id="editbtn" href="<?php echo $_GET['host']."/index.php?action=edit&code=".$_POST['product']['code'];
             ?>">Modifier
                 le Produit</a>
