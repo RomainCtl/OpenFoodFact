@@ -423,3 +423,15 @@ aside {
 #nutri input{
     margin-left: 5px;
 }
+
+form > textarea {
+
+}
+
+#countrieselected {
+    width: 200px;
+}
+
+#addiselected {
+    width: 500px;
+}

@@ -10,7 +10,7 @@ class Produit{
     public $product, $nutrition, $additifs, $countries;
     public $bdd;
 
-    public function __construct($bdd, array $info = array()){
+    public function __construct($bdd, array $info, array $countries=null, array $additifs=null){
         $this->bdd = $bdd;
         $this->product = array(
             "code"=> $info['code'],
@@ -45,8 +45,57 @@ class Produit{
             "Fer" => $info['iron'],
             "Score nutritionnel" => $info['nutrition_score']
         );
-        $this->additifs = $this->setAdditifs();
-        $this->countries = $this->setCountries();
+        if ($countries == null) $this->countries = $this->setCountries();
+        else $this->countries = $countries;
+
+        if ($additifs == null) $this->additifs = $this->setAdditifs();
+        else $this->additifs = $additifs;
+    }
+
+    public function add($realname){
+        $nutri = array();
+        foreach($this->nutrition as $k=>$v)
+            $nutri[array_search($k, $realname)] = $v;
+
+        $prod = $this->product;
+        unset($prod['create_date']);
+        unset($prod['last_change_date']);
+        unset($prod['nbadditives']);
+        unset($prod['fromPalmOil']);
+        $prod['frompalmoil'] = $this->product['fromPalmOil'];
+
+        //inserer le produit
+        if (!$this->bdd->insertProduct(array_merge($prod, $nutri))) return false;
+        //les additifs
+        if ($this->additifs != null)
+            if (!$this->bdd->insertAdditives($this->additifs, $this->product["code"])) return false;
+        //les countries
+        if ($this->countries != null)
+            if (!$this->bdd->insertCountries($this->countries, $this->product['code'])) return false;
+        return true;
+    }
+
+    public function update($realname){
+        $nutri = array();
+        foreach($this->nutrition as $k=>$v)
+            $nutri[array_search($k, $realname)] = $v;
+
+        $prod = $this->product;
+        unset($prod['create_date']);
+        unset($prod['last_change_date']);
+        unset($prod['nbadditives']);
+        unset($prod['fromPalmOil']);
+        $prod['frompalmoil'] = $this->product['fromPalmOil'];
+
+        //inserer le produit
+        if (!$this->bdd->updateProduct(array_merge($prod, $nutri))) return false;
+        //les additifs
+        if ($this->additifs != null)
+            if (!$this->bdd->updateAdditifs($this->additifs, $this->product['code'])) return false;
+        //les countries
+        if ($this->countries != null)
+            if (!$this->bdd->updateCountries($this->countries, $this->product['code'])) return false;
+        return true;
     }
 
     private function setAdditifs(){

@@ -76,4 +76,85 @@ class Base{
     public function getCountries(){
         return $this->queryArray("SELECT * FROM countries");
     }
+
+    public function insertProduct($infos){
+        $res = $this->bdd->prepare("INSERT INTO produits (code,name,brands, creator,image_url,image_ingredients_url, ingredients, servingsize, 
+nutritiongrade, energy, fat, satured_fat, trans_fat, cholesterol, carbohydrates, sugars, fiber, proteins, salt, sodium, vitamina, vitaminc, 
+ calcium, iron, nutrition_score, frompalmoil) VALUES (:code, :name, :brands, :creator, :image_url, :image_ingredients_url, :ingredients, :servingsize, 
+:nutritiongrade, :energy, :fat, :satured_fat, :trans_fat, :cholesterol, :carbohydrates, :sugars, :fiber, :proteins, :salt, :sodium, :vitamina, :vitaminc, 
+ :calcium, :iron, :nutrition_score, :frompalmoil)");
+        try{
+            $res->execute($infos);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function updateProduct($infos){
+        $res = $this->bdd->prepare("UPDATE produits SET name=:name, brands=:brands, creator=:creator, image_url=:image_url, image_ingredients_url=:image_ingredients_url, ingredients=:ingredients,
+    servingsize=:servingsize, nutritiongrade=:nutritiongrade, energy=:energy, fat=:fat, satured_fat=:satured_fat, trans_fat=:trans_fat, cholesterol=:cholesterol,
+    carbohydrates=:carbohydrates, sugars=:sugars, fiber=:fiber, proteins=:proteins, salt=:salt, sodium=:sodium, vitamina=:vitamina, vitaminc=:vitaminc,
+    calcium=:calcium, iron=:iron, nutrition_score=:nutrition_score, frompalmoil=:frompalmoil WHERE code=:code");
+        try{
+            $res->execute($infos);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function insertCountries($codeother, $codeprod){
+        $sql = "INSERT INTO origine VALUES ";
+        $first=true;
+        $infos = array();
+        foreach($codeother as $k=>$v){
+            if ($first)
+                $sql .= "(?, ?)";
+            else
+                $sql .= ",(?, ?)";
+            $first=false;
+            array_push($infos,$k,$codeprod);
+        }
+        $res = $this->bdd->prepare($sql);
+        try{
+            $res->execute($infos);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function insertAdditives($codeother, $codeprod){
+        $sql = "INSERT INTO contains_additives VALUES ";
+        $first=true;
+        $infos = array();
+        foreach($codeother as $k=>$v){
+            if ($first)
+                $sql .= "(?, ?)";
+            else
+                $sql .= ",(?, ?)";
+            $first=false;
+            array_push($infos,$codeprod,$k);
+        }
+        $res = $this->bdd->prepare($sql);
+        try{
+            $res->execute($infos);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function updateCountries($codeother, $codeprod){
+        $res = $this->bdd->prepare("DELETE FROM origine WHERE codeprod=?");
+        $res->execute(array($codeprod));
+        return $this->insertCountries($codeother, $codeprod);
+    }
+
+    public function updateAdditifs($codeother, $codeprod){
+        $res = $this->bdd->prepare("DELETE FROM contains_additives WHERE code=?");
+        $res->execute(array($codeprod));
+        return $this->insertAdditives($codeother, $codeprod);
+    }
 }

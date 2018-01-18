@@ -12,9 +12,10 @@ class Main{
     public $webHost;
     public $defaultIMG;
     public $defaultLimit;
-    public $prodconf, $advsearchconf;
+    public $prodconf, $advsearchconf, $nutriscoreconf;
 
     private function __construct(){
+        //$this->webHost = "http://".$_SERVER['HTTP_HOST'];
         $this->webHost = "http://".$_SERVER['HTTP_HOST']."/OpenFoodFact/Site";
         $this->defaultIMG = $this->webHost."/assets/img/default.jpg";
         $this->defaultLimit = 40;
@@ -28,6 +29,9 @@ class Main{
 
         $content = file_get_contents($this->webHost."/config/research.json");
         $this->advsearchconf = json_decode($content, true);
+
+        $content = file_get_contents($this->webHost."/config/normeNutriScore.json");
+        $this->nutriscoreconf = json_decode($content, true);
     }
 
     public static function getInstance(){
@@ -109,8 +113,11 @@ class Main{
     }
 
     public function add(){
-        if (isset($_POST['codeb'])){
-
+        if (isset($_POST['code'])){
+            if ($this->toProduct($_POST, true))
+                echo "Produit ajouter avec succes !";
+            else
+                echo "Echec de l'ajout du produit !";
         } else {
             $_POST['criteres'] = $this->advsearchconf['criteres'];
             $_POST['nutriments'] = $this->advsearchconf['nutriments'];
@@ -122,8 +129,12 @@ class Main{
     }
 
     public function edit($code){
-        if (isset($_POST['codeb'])){
-
+        if (isset($_POST['ingredients'])){
+            $_POST['code'] = $code;
+            if ($this->toProduct($_POST, false))
+                echo "Produit modifier avec succes !";
+            else
+                echo "Echec de la modification du produit !";
         } else {
             $_POST['criteres'] = $this->advsearchconf['criteres'];
             $_POST['nutriments'] = $this->advsearchconf['nutriments'];
@@ -140,6 +151,81 @@ class Main{
 
             $this->viewWithInclude("./view/addProduct.php");
         }
+    }
+    private function toProduct($post, $add){
+        $infos = array();
+        $countries = null;
+        $additifs = null;
+
+        $infos['nutritiongrade'] = null;
+        $infos['create_date'] = null; //ne sert a rien mais obligatoire pour l'initialisation d'un produit
+        $infos['last_change_date'] = null; //ne sert a rien mais obligatoire pour l'initialisation d'un produit
+        $infos['creator'] = "openfoodfacts-contributors"; //le creator sera l'identifiant de l'utilisateur qui
+        // ajoute le produit (c'est une valeur par default pour le moment)
+
+        //nutrition grade
+        if ($post['valnut']['nutrition_score'] != ''){
+            $tmp = $this->calcNutriScore(intval($post['valnut']['nutrition_score']), (isset($post['isdrink']) ?
+                true : false));
+            $infos['nutritiongrade'] = $tmp;
+            if (isset($post['isdrink'])) unset($post['isdrink']);
+        } else {
+            if (isset($post['isdrink'])) unset($post['isdrink']);
+        }
+
+        //valeur nutritionnel
+        foreach ($post['valnut'] as $k=>$v){
+            if ($v == '') $infos[$k]=0;
+            else $infos[$k]=intval($v);
+        }
+        unset($post['valnut']);
+
+        //countries
+        if (isset($post['countries'])){
+            foreach($post['countries'] as $k=>$v)
+                $countries[$k] = $v;
+            unset($post['countries']);
+        }
+
+        $nbadditif = 0;
+        //additifs
+        if (isset($post['additives'])){
+            foreach($post['additives'] as $k=>$v) {
+                $additifs[$k] = $v;
+                $nbadditif++;
+            }
+            unset($post['additives']);
+        }
+        $infos['nbadditives'] = $nbadditif;
+
+        foreach($post as $k=>$v){
+            $infos[$k] = $v;
+        }
+
+        include "./utils/product.php";
+        $prod = new Produit($this->bdd, $infos, $countries, $additifs);
+
+        if ($add){
+            return $prod->add($this->advsearchconf['nutriments']);
+        } else {
+            return $prod->update($this->advsearchconf['nutriments']);
+        }
+    }
+
+    //return le nutri grade en fonction du nutriscore
+    private function calcNutriScore($score, $isdrink){
+        $cat = "eat";
+        if ($isdrink) $cat = "drink";
+
+        foreach ($this->nutriscoreconf[$cat] as $k=>$inter){
+            $a=$inter[0];
+            $b=$inter[1];
+
+            if ($a == "x" && $score <= $b) return $k;
+            else if ($b == "x" && $score >= $a) return $k;
+            else { if ($score <= $b && $score >= $a) return $k;}
+        }
+        return null;
     }
 
     private function viewWithInclude($path){
