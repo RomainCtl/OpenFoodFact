@@ -54,7 +54,7 @@ class Main{
     }
 
     public function consult($code){
-        include "./utils/product.php";
+        if (!class_exists("Produit")) include "./utils/product.php";
         $produit = Produit::withCode($this->bdd, $code);
 
         $_POST['defaultIMG'] = $this->defaultIMG;
@@ -114,10 +114,13 @@ class Main{
 
     public function add(){
         if (isset($_POST['code'])){
-            if ($this->toProduct($_POST, true))
-                echo "Produit ajouter avec succes !";
-            else
-                echo "Echec de l'ajout du produit !";
+            if ($this->toProduct($_POST, true)) {
+                $_POST['msg'] = "<div class='success'><p>Produit ajouté avec succès !</p></div>";
+                $this->consult($_POST['code']);
+            } else {
+                $_POST['msg'] = "<div class='echec'><p>Echec de l'ajout du produit !</p></div>";
+                $this->index();
+            }
         } else {
             $_POST['criteres'] = $this->advsearchconf['criteres'];
             $_POST['nutriments'] = $this->advsearchconf['nutriments'];
@@ -131,10 +134,13 @@ class Main{
     public function edit($code){
         if (isset($_POST['ingredients'])){
             $_POST['code'] = $code;
-            if ($this->toProduct($_POST, false))
-                echo "Produit modifier avec succes !";
-            else
-                echo "Echec de la modification du produit !";
+            if ($this->toProduct($_POST, false)){
+                $_POST['msg'] = "<div class='success'><p>Produit modifié avec succès !</p></div>";
+                $this->consult($_POST['code']);
+            } else {
+                $_POST['msg'] = "<div class='echec'><p>Echec de la modification du produit !</p></div>";
+                $this->consult($_POST['code']);
+            }
         } else {
             $_POST['criteres'] = $this->advsearchconf['criteres'];
             $_POST['nutriments'] = $this->advsearchconf['nutriments'];

@@ -8,6 +8,9 @@
 
 ?>
 <div class="col" id="consult">
+    <?php
+    if (isset($_POST['msg']) && !empty($_POST['msg'])) echo $_POST['msg'];
+    ?>
     <div class="row">
         <div class="col">
             <h1><?php echo $_POST['product']['name'] ?></h1>

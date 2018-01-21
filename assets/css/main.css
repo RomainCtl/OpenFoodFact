@@ -435,3 +435,12 @@ form > textarea {
 #addiselected {
     width: 500px;
 }
+
+.echec,
+.success {
+    text-align: center;
+    color: white;
+}
+
+.success {background-color: #33803e}
+.echec {background-color: #802826}
